@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.62.0
+  changelogEntry:
+    - summary: |
+        Add `title-source` configuration option for folder navigation. When using `folder` navigation, you can now set `title-source: frontmatter` to use the `title` field from frontmatter for page and section titles instead of deriving titles from file names. The default behavior (`title-source: filename`) remains unchanged.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
 - version: 3.61.0
   changelogEntry:
     - summary: |

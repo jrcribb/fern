@@ -10,13 +10,13 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
-import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
-import { parseAsyncAPI } from "./asyncapi/parse";
-import { AsyncAPIV2 } from "./asyncapi/v2";
-import { AsyncAPIV3 } from "./asyncapi/v3";
-import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
-import { getParseOptions, ParseOpenAPIOptions } from "./options";
-import { createSchemaCollisionTracker } from "./utils/schemaCollision";
+import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options.js";
+import { parseAsyncAPI } from "./asyncapi/parse.js";
+import { AsyncAPIV2 } from "./asyncapi/v2/index.js";
+import { AsyncAPIV3 } from "./asyncapi/v3/index.js";
+import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr.js";
+import { getParseOptions, ParseOpenAPIOptions } from "./options.js";
+import { createSchemaCollisionTracker } from "./utils/schemaCollision.js";
 
 export type Document = OpenAPIDocument | AsyncAPIDocument;
 

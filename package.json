@@ -38,6 +38,7 @@
     "check:biome": "biome check",
     "check": "biome check",
     "check:fix": "biome check --write",
+    "boundaries": "turbo boundaries",
     "depcheck": "turbo run depcheck --continue=always",
     "check:knip": "turbo run depcheck --continue=always",
     "codegen:local": "pnpm fern:local generate",

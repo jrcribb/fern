@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.83.2
+  changelogEntry:
+    - summary: |
+        Improve CLI startup performance by loading workspace files concurrently.
+      type: chore
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.83.1
   changelogEntry:
     - summary: |

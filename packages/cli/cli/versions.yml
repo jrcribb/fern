@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.89.2
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement for multi-spec API definitions. All OpenAPI sources are now combined into a single merged spec, with overrides applied per-spec, so endpoints from any spec are correctly matched during AI enhancement.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.89.1
   changelogEntry:
     - summary: |

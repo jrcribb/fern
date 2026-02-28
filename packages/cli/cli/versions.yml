@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.95.2
+  changelogEntry:
+    - summary: |
+        Exclude `.fern/metadata.json` from the git diff used for AUTO version analysis.
+        Previously, changes to `.fern/metadata.json` (which includes `cliVersion`)
+        were counted as meaningful SDK changes, causing CLI-only version bumps to
+        trigger unnecessary SDK releases. The diff now uses
+        `:(exclude).fern/metadata.json` so that metadata-only changes result in an
+        empty diff and generation is skipped.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
 - version: 3.95.1
   changelogEntry:
     - summary: |
@@ -8,7 +21,6 @@
       type: fix
   createdAt: "2026-02-28"
   irVersion: 65
-
 - version: 3.95.0
   changelogEntry:
     - summary: |
@@ -19,7 +31,6 @@
       type: feat
   createdAt: "2026-02-27"
   irVersion: 65
-
 - version: 3.94.0
   changelogEntry:
     - summary: |

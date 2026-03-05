@@ -32,6 +32,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        generatorLanguage: string | undefined;
     }
 }
 
@@ -46,6 +47,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private generatorLanguage: string | undefined;
 
     constructor({
         context,
@@ -57,7 +59,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        generatorLanguage
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -69,6 +72,7 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.generatorLanguage = generatorLanguage;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -194,7 +198,11 @@ export class LocalTaskHandler {
                 const clientRegistry = await this.getClientRegistry();
                 const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-                const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
+                const analysis = await bamlClient.AnalyzeSdkDiff(
+                    cleanedDiff,
+                    this.generatorLanguage ?? "unknown",
+                    previousVersion ?? "0.0.0"
+                );
 
                 if (analysis.version_bump === VersionBump.NO_CHANGE) {
                     this.context.logger.info("AI detected no semantic changes");

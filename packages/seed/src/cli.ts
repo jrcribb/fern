@@ -154,6 +154,7 @@ function addTestCommand(cli: Argv) {
             const lock = new Semaphore(argv.parallel);
             const tests: Promise<boolean>[] = [];
             const scriptRunners: ScriptRunner[] = [];
+            const testRunners: TestRunner[] = [];
 
             for (const generator of generators) {
                 if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
@@ -255,11 +256,13 @@ function addTestCommand(cli: Argv) {
                         keepContainer: argv.keepContainer,
                         scriptRunner,
                         inspect: argv.inspect,
-                        runner: argv.containerRuntime as "docker" | "podman" | undefined
+                        runner: argv.containerRuntime as "docker" | "podman" | undefined,
+                        parallelism: argv.parallel
                     });
                 }
 
                 scriptRunners.push(scriptRunner);
+                testRunners.push(testRunner);
                 tests.push(
                     testGenerator({
                         generator,
@@ -271,10 +274,18 @@ function addTestCommand(cli: Argv) {
                 );
             }
 
-            const results = await Promise.all(tests);
+            let results: boolean[];
+            try {
+                results = await Promise.all(tests);
+            } finally {
+                // Always clean up containers and script runners, even if tests throw unexpectedly.
+                for (const scriptRunner of scriptRunners) {
+                    await scriptRunner.stop();
+                }
 
-            for (const scriptRunner of scriptRunners) {
-                await scriptRunner.stop();
+                for (const testRunner of testRunners) {
+                    await testRunner.cleanup();
+                }
             }
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code

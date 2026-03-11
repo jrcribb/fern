@@ -15,6 +15,7 @@ export {
     createObjectProperty,
     createPathParameter,
     createQueryParameter,
+    createSdkRequestBody,
     createSdkRequestWrapper
 } from "./ir-factories.js";
 export {

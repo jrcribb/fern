@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        Remove deprecated `private` field from `DocsInstance` configuration.
+      type: chore
+  createdAt: "2026-04-04"
+  irVersion: 66
+
 - version: 4.62.0
   changelogEntry:
     - summary: |

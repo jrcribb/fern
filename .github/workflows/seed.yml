@@ -117,6 +117,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          # fetch-depth: 2 ensures the merge commit's parents are available.
+          # For PRs, HEAD is a merge commit; HEAD~1 is the base branch tip.
+          # Without this, HEAD^1/HEAD^2 are not resolvable in a shallow clone
+          # and the affected detection falls back to diffing against the
+          # (potentially stale) event payload SHA.
+          fetch-depth: 2
 
       - name: Install
         uses: ./.github/actions/install
@@ -141,6 +148,7 @@ jobs:
             # instead of base.sha avoids a race where main advances between the
             # webhook event and the merge ref computation, which caused unrelated
             # generators to run (e.g. go-model on PHP-only PRs).
+            # NOTE: fetch-depth: 2 (above) ensures HEAD^1/HEAD^2 are available.
             if git rev-parse --verify HEAD^2 >/dev/null 2>&1; then
               BASE_REF=$(git rev-parse HEAD^1)
               echo "Using merge commit first parent: $BASE_REF"
@@ -148,9 +156,8 @@ jobs:
               # Fallback: not a merge commit (shouldn't happen for PRs, but be safe)
               BASE_REF="${{ github.event.pull_request.base.sha }}"
               echo "Using PR base SHA (fallback): $BASE_REF"
+              git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || true
             fi
-            # Fetch just the base commit so git diff can reach it
-            git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || true
           else
             # For push/dispatch/workflow_call: use last successful run SHA
             LAST_SUCCESS_SHA=$(gh api \

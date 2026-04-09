@@ -2188,6 +2188,13 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     boolean: true,
                     default: false,
                     description: "Output result as JSON"
+                })
+                .option("output", {
+                    type: "array",
+                    string: true,
+                    description:
+                        "Output targets: filesystem paths and/or registry URLs. " +
+                        "Omit to publish to the default preview registry and write to a temp directory."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -2200,7 +2207,8 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 groupName: argv.group,
                 generatorFilter,
                 apiName: argv.api,
-                json: argv.json
+                json: argv.json,
+                output: argv.output
             });
         }
     );

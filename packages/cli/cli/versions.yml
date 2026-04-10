@@ -12,6 +12,13 @@
   createdAt: "2026-04-08"
   irVersion: 66
 
+- version: 4.66.0
+  changelogEntry:
+    - summary: |
+        Internal infrastructure for GitHub Actions-based SDK generation automation.
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 66
 
 - version: 4.65.3
   changelogEntry:
@@ -20,7 +27,6 @@
         docs pages as broken.
       type: fix
   createdAt: "2026-04-10"
-
   irVersion: 66
 
 - version: 4.65.2

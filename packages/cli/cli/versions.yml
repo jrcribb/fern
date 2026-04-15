@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.71.1
+  changelogEntry:
+    - summary: |
+        Fix false positive warnings in the `missing-redirects` check. Pages are no
+        longer flagged as removed or moved when their old URL is still actively
+        served by another page in the local docs config.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 4.71.0
   changelogEntry:
     - summary: |

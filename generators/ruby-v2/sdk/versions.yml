@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.4.1
+  changelogEntry:
+    - summary: |
+        Add `Severity` to `Naming/VariableNumber` in generated `.rubocop.yml` config.
+        Defaults to `warning` for customer SDKs. Configurable via `rubocopSeverity` custom config.
+      type: chore
+  createdAt: "2026-04-15"
+  irVersion: 66
 
 - version: 1.4.0
   changelogEntry:

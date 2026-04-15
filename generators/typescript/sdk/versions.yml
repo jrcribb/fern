@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.6
+  changelogEntry:
+    - summary: |
+        Fix OAuth token request to include literal custom properties (e.g., grant_type)
+        from the token endpoint request. Previously, only client_id and client_secret
+        were passed, causing TypeScript compilation errors for APIs that require
+        additional literal properties like grant_type on the token request.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 3.63.5
   changelogEntry:
     - summary: |

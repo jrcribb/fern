@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.71.6
+  changelogEntry:
+    - summary: |
+        Fix MDX rendering of C++ library docs by properly escaping angle brackets
+        in template parameters and HTML-like tags within description text. Unescaped
+        angle brackets (e.g. `vector<int>`, `<para>`) caused MDX parse failures.
+      type: fix
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 4.71.5
   changelogEntry:
     - summary: |

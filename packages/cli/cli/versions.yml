@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.72.0
+  changelogEntry:
+    - summary: |
+        Polish `fern config migrate` command: point the `docs` key at the
+        existing `docs.yml` file via `$ref` syntax instead of inlining, drop
+        legacy `defaultGroup` and `group` fields from SDK target output, and
+        automatically update GitHub Actions workflow files to use the v2 CLI
+        syntax (`fern sdk generate`, `--target` instead of `--group`).
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 4.71.6
   changelogEntry:
     - summary: |

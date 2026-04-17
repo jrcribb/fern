@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.76.2
+  changelogEntry:
+    - summary: |
+        Fix the missing-redirects check to ignore stale historical slug-table rows
+        and only compare against the most recent published slug per page.
+      type: fix
+  createdAt: "2026-04-17"
+  irVersion: 66
 - version: 4.76.1
   changelogEntry:
     - summary: |

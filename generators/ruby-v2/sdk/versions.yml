@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.4.4
+  changelogEntry:
+    - summary: |
+        Publish new ruby-v2 generator version.
+      type: chore
+  createdAt: "2026-04-20"
+  irVersion: 66
 - version: 1.4.3
   changelogEntry:
     - summary: |

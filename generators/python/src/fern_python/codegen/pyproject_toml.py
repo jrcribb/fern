@@ -224,7 +224,7 @@ packages = [
             # Conditionally add requests and types-requests for wire tests
             wire_test_deps = ""
             if self.enable_wire_tests:
-                wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
+                wire_test_deps = 'requests = "^2.33.0"\ntypes-requests = "^2.33.0"\n'
 
             # pytest >= 9.0.3 addresses CVE-2025-71176 (insecure tmpdir handling).
             # pytest 9 requires Python >= 3.9, and pytest-asyncio ^1.0.0 requires

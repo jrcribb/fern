@@ -109,7 +109,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
 
     public async execute(args: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         if (this.containers.length === 0 || this.entrypoint == null) {
-            throw new Error("Containers not started. Call start() before execute().");
+            throw new CliError({
+                message: "Containers not started. Call start() before execute().",
+                code: CliError.Code.InternalError
+            });
         }
 
         const containerId = await this.acquire();
@@ -174,7 +177,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             );
         }
         if (this.entrypoint == null) {
-            throw new Error("Containers not started. Call start() before execute().");
+            throw new CliError({
+                message: "Containers not started. Call start() before execute().",
+                code: CliError.Code.InternalError
+            });
         }
         const entrypoint = this.entrypoint;
         const logger = context.logger;
@@ -347,7 +353,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         );
 
         if (exitCode !== 0) {
-            throw new Error(`Failed to inspect image ${this.imageName} (exit code ${exitCode}).\n${stderr || stdout}`);
+            throw new CliError({
+                message: `Failed to inspect image ${this.imageName} (exit code ${exitCode}).\n${stderr || stdout}`,
+                code: CliError.Code.ContainerError
+            });
         }
 
         try {
@@ -359,9 +368,11 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             logger?.warn(`Failed to parse entrypoint for image ${this.imageName}: ${e}`);
         }
 
-        throw new Error(
-            `Could not determine entrypoint for image ${this.imageName}. ` +
-                `The image must have an ENTRYPOINT defined to be used with reusable containers.`
-        );
+        throw new CliError({
+            message:
+                `Could not determine entrypoint for image ${this.imageName}. ` +
+                `The image must have an ENTRYPOINT defined to be used with reusable containers.`,
+            code: CliError.Code.ContainerError
+        });
     }
 }

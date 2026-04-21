@@ -763,6 +763,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
+                .option("skip-if-no-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip opening a PR / pushing when the generated output has no diff from the base branch."
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -874,7 +880,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     outputDir: argv.output,
                     noReplay: !argv.replay,
                     retryRateLimited: argv["retry-rate-limited"],
-                    requireEnvVars: argv["require-env-vars"]
+                    requireEnvVars: argv["require-env-vars"],
+                    skipIfNoDiff: argv["skip-if-no-diff"]
                 });
             }
             if (argv.docs != null) {
@@ -934,7 +941,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 outputDir: argv.output,
                 noReplay: !argv.replay,
                 retryRateLimited: argv["retry-rate-limited"],
-                requireEnvVars: argv["require-env-vars"]
+                requireEnvVars: argv["require-env-vars"],
+                skipIfNoDiff: argv["skip-if-no-diff"]
             });
         }
     );

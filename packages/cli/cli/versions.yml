@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.85.2
+  changelogEntry:
+    - summary: |
+        Surface descriptive Fiddle error messages (e.g. `GithubAppNotInstalled`) in
+        the CLI instead of the generic "Failed to create job. Please try again or
+        contact support@buildwithfern.com" fallback. The `_other` visitor callback
+        receives `core.Fetcher.Error` directly (`{ reason, statusCode, body }`), but
+        `extractErrorMessage` was looking one level too deep under `.content`, so
+        the descriptive message was never extracted.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 4.85.1
   changelogEntry:
     - summary: |

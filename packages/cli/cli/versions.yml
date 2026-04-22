@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.87.1
+  changelogEntry:
+    - summary: |
+        Gracefully handle "Self-referencing circular pointer" errors from OpenAPI specs.
+        Instead of failing the entire publish, the CLI now logs a warning with the
+        offending file path and circular $ref breadcrumbs, then continues processing
+        without full reference resolution.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 4.87.0
   changelogEntry:
     - summary: |

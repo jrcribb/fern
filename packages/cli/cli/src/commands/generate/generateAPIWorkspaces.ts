@@ -1,5 +1,4 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
-import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -9,6 +8,7 @@ import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
@@ -24,7 +24,7 @@ export async function generateAPIWorkspaces({
     project,
     cliContext,
     version,
-    groupName,
+    groupNames,
     generatorName,
     generatorIndex,
     shouldLogS3Url,
@@ -51,7 +51,8 @@ export async function generateAPIWorkspaces({
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
-    groupName: string | undefined;
+    /** One or more `--group` values. `undefined` means no `--group` was passed. */
+    groupNames: string[] | undefined;
     generatorName: string | undefined;
     /** Index-based generator targeting (0-based). Used by `fern automations generate --generator 0`. */
     generatorIndex: number | undefined;
@@ -99,7 +100,7 @@ export async function generateAPIWorkspaces({
 
     await confirmOutputDirectoriesForEligibleGenerators({
         project,
-        groupName,
+        groupNames,
         generatorName,
         generatorIndex,
         automation,
@@ -111,7 +112,7 @@ export async function generateAPIWorkspaces({
         orgId: project.config.organization,
         command: resolvePosthogCommandLabel(automation),
         properties: {
-            workspaces: buildPosthogWorkspaces({ project, groupName, generatorName })
+            workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
         }
     });
 
@@ -134,7 +135,7 @@ export async function generateAPIWorkspaces({
                     projectConfig: project.config,
                     context,
                     version,
-                    groupName,
+                    groupNames,
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url,
@@ -171,7 +172,7 @@ export async function generateAPIWorkspaces({
  */
 async function confirmOutputDirectoriesForEligibleGenerators({
     project,
-    groupName,
+    groupNames,
     generatorName,
     generatorIndex,
     automation,
@@ -179,7 +180,7 @@ async function confirmOutputDirectoriesForEligibleGenerators({
     force
 }: {
     project: Project;
-    groupName: string | undefined;
+    groupNames: string[] | undefined;
     generatorName: string | undefined;
     generatorIndex: number | undefined;
     automation: AutomationRunOptions | undefined;
@@ -187,7 +188,7 @@ async function confirmOutputDirectoriesForEligibleGenerators({
     force: boolean;
 }): Promise<void> {
     for (const workspace of project.apiWorkspaces) {
-        const resolvedGroupNames = expandGroupFilter(groupName, workspace.generatorsConfiguration);
+        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
         const rootAutorelease = workspace.generatorsConfiguration?.rawConfiguration.autorelease;
         const groupsInScope =
             workspace.generatorsConfiguration?.groups.filter(
@@ -223,18 +224,18 @@ async function confirmOutputDirectoriesForEligibleGenerators({
 /** Builds the `workspaces` array for the posthog event, honoring `--group` / `--generator` filters. */
 function buildPosthogWorkspaces({
     project,
-    groupName,
+    groupNames,
     generatorName
 }: {
     project: Project;
-    groupName: string | undefined;
+    groupNames: string[] | undefined;
     generatorName: string | undefined;
 }) {
     return project.apiWorkspaces.map((workspace) => {
-        const resolvedGroupNames = expandGroupFilter(groupName, workspace.generatorsConfiguration);
+        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
         return {
             name: workspace.workspaceName,
-            group: groupName,
+            group: groupNames != null && groupNames.length === 1 ? groupNames[0] : groupNames,
             generators: workspace.generatorsConfiguration?.groups
                 .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
                 .map((group) =>
@@ -249,34 +250,4 @@ function buildPosthogWorkspaces({
                 )
         };
     });
-}
-
-/**
- * Expands the caller's `--group` filter into a set of concrete group names.
- *
- * Returns null when no filter was supplied (meaning "match every group"), an alias's target
- * list when the name is an alias, or `[groupName]` otherwise. Used only to pre-filter groups
- * for the checkOutputDirectory pre-flight and posthog telemetry — the authoritative group
- * resolution for generation lives in `resolveGroupNamesForGeneration`.
- */
-function expandGroupFilter(
-    groupName: string | undefined,
-    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined
-): string[] | null {
-    if (groupName == null) {
-        return null; // No filter - include all groups
-    }
-
-    if (generatorsConfiguration == null) {
-        return [groupName]; // No configuration - just use the group name as-is
-    }
-
-    // Check if it's an alias
-    const aliasGroups = generatorsConfiguration.groupAliases[groupName];
-    if (aliasGroups != null) {
-        return aliasGroups;
-    }
-
-    // Not an alias - return as single group
-    return [groupName];
 }

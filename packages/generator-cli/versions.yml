@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix autoversion placeholder leak on NO_CHANGE runs and auto-wire
+        `GithubStep` PR body from the `AutoVersionStep` result (FER-10028,
+        FER-10029).
+      type: fix
+  createdAt: "2026-04-23"
+  version: 0.9.15
+
+- changelogEntry:
+    - summary: |
         Fix `pipeline run` crashing on stdout emission for replay-enabled runs.
         `GenerationCommitStep`'s `preparedReplay` handle holds a live `simple-git`
         instance whose internal `GitExecutor`/`GitExecutorChain` form a cycle, so

@@ -244,6 +244,46 @@ await client.Union.NestedUnionsAsync("string");
 </dl>
 </details>
 
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedObjectUnionsAsync</a>(OneOf&lt;string, WrapperObject&gt; { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Union.NestedObjectUnionsAsync("string");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OneOf<string, WrapperObject>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetWithBasePropertiesAsync</a>(OneOf&lt;NamedMetadata, Dictionary&lt;string, object?&gt;?&gt; { ... }) -> WithRawResponseTask&lt;OneOf&lt;NamedMetadata, Dictionary&lt;string, object?&gt;?&gt;&gt;</code></summary>
 <dl>
 <dd>

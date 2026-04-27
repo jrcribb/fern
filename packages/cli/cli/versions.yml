@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.100.1
+  changelogEntry:
+    - summary: |
+        Fix `fern automations generate` step summary not displaying SDK versions.
+        Upgrade Fiddle SDK to consume the new `actualVersion` field from
+        `FinishedTaskStatus`, which Fiddle now returns for both AUTO and explicit
+        versioning modes. Falls back to log-regex parsing and locally-resolved
+        version for backward compatibility.
+      type: fix
+    - summary: |
+        Fix `fern docs dev` to serve translated page content when viewing localized pages.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 4.100.0
   changelogEntry:
     - summary: |

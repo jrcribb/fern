@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.104.0
+  changelogEntry:
+    - summary: |
+        Improved translation logging by moving verbose page array output to debug level and formatting as a concise count instead of raw JSON array.
+      type: chore
+    - summary: |
+        Support simplified string syntax for `translations` field in docs.yml.
+        You can now use `translations: [en, ja, fr]` instead of requiring
+        `translations: [{lang: en}, {lang: ja}, {lang: fr}]`. The verbose
+        object syntax remains supported for specifying `default: true`.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
 - version: 4.103.1
   changelogEntry:
     - summary: |

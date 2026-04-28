@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.100.3
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs --preview` to register translations for preview URLs.
+        Previously, translation registration was skipped entirely in preview mode,
+        causing translated docs to not appear in preview deployments.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
 - version: 4.100.2
   changelogEntry:
     - summary: |

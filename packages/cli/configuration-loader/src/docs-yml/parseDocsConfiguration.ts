@@ -148,8 +148,12 @@ export async function parseDocsConfiguration({
     });
 
     const defaultLocale =
-        rawDocsConfiguration.translations?.find((t) => t.default === true)?.lang ??
-        rawDocsConfiguration.translations?.[0]?.lang;
+        rawDocsConfiguration.translations
+            ?.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t))
+            .find((t) => t.default === true)?.lang ??
+        (rawDocsConfiguration.translations?.[0] != null
+            ? docsYml.DocsYmlSchemas.normalizeTranslationConfig(rawDocsConfiguration.translations[0]).lang
+            : undefined);
     const translationPagesPromise = pagesPromise.then((resolvedPages) =>
         loadTranslationPages({
             translations: rawDocsConfiguration.translations,
@@ -1973,8 +1977,10 @@ async function loadTranslationPages({
 
     const result: Record<string, Record<RelativeFilePath, string>> = {};
 
+    const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+
     await Promise.all(
-        translations.map(async ({ lang }) => {
+        normalizedTranslations.map(async ({ lang }) => {
             // The default locale's pages live in the top-level `pages/` directory,
             // not in `translations/<lang>/`. Always skip it, even if the directory exists.
             if (lang === defaultLocale) {

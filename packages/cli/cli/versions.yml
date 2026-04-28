@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.102.0
+  changelogEntry:
+    - summary: |
+        Add validation to `fern check` / `fern docs check` that verifies all configured
+        translation locales have a corresponding directory under `fern/translations/`.
+        If a directory is missing, a clear error message is printed showing the expected
+        directory structure.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
 - version: 4.101.0
   changelogEntry:
     - summary: |

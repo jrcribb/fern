@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.0.0
+  changelogEntry:
+    - summary: |
+        Remove `og:background-image` metadata key. Use `og:dynamic:background-image` instead,
+        which is consistent with other `og:dynamic:*` settings.
+      type: break
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 4.109.0
   changelogEntry:
     - summary: |

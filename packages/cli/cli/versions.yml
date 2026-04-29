@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.109.0
+  changelogEntry:
+    - summary: |
+        cli-v2: Add support for GraphQL specs in `fern.yml`. Specs can now be declared
+        with a `graphql` key (plus optional `name`, `origin`, and `overrides`) and are
+        rendered in the docs pipeline. SDK generation targets that reference an API
+        containing a GraphQL spec emit a non-fatal warning and skip the GraphQL spec,
+        since GraphQL SDK generation is not supported.
+      type: feat
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 4.108.0
   changelogEntry:
     - summary: |

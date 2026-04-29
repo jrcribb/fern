@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.38.3
+  changelogEntry:
+    - summary: |
+        Only generate `EncodeQueryValues` on undiscriminated unions that are reachable from a query parameter position, instead of on every union.
+      type: chore
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 1.38.2
   changelogEntry:
     - summary: |

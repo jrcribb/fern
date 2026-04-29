@@ -14,6 +14,7 @@ import javaModelMigrations from "./generators/java-model/migrations/index.js";
 import pythonSdkMigrations from "./generators/python/migrations/index.js";
 import rubySdkMigrations from "./generators/ruby/migrations/index.js";
 import rustSdkMigrations from "./generators/rust/migrations/index.js";
+import swiftSdkMigrations from "./generators/swift/migrations/index.js";
 import typescriptSdkMigrations from "./generators/typescript/migrations/index.js";
 
 /**
@@ -49,6 +50,9 @@ export const migrations: Record<string, MigrationModule> = {
 
     // Rust SDK
     "fernapi/fern-rust-sdk": rustSdkMigrations,
+
+    // Swift SDK
+    "fernapi/fern-swift-sdk": swiftSdkMigrations,
 
     // TypeScript SDK - all variants share the same migrations
     "fernapi/fern-typescript": typescriptSdkMigrations,

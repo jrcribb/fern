@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.66.5
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests for SSE endpoints with protocol-discriminated unions.
+        The expected event assertion no longer wraps the deserialized data in a duplicate
+        discriminant key (which produced TS2783 "specified more than once" errors under
+        strict typecheck). When the example puts the discriminant inside the data payload
+        and leaves the SSE event line empty, the discriminant is now promoted onto the
+        event line before being stripped from the data, so the mocked wire body matches
+        what the runtime SDK produces.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 3.66.4
   changelogEntry:
     - summary: |

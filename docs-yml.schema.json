@@ -4675,7 +4675,7 @@
             }
           ]
         },
-        "og:background-image": {
+        "og:dynamic:background-image": {
           "oneOf": [
             {
               "type": "string"

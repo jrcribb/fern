@@ -2036,7 +2036,7 @@ types:
       "og:dynamic":
         type: optional<boolean>
         docs: When true, enables dynamic OG image generation for pages that don't have a custom og:image set.
-      "og:background-image":
+      "og:dynamic:background-image":
         type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
       "og:dynamic:text-color":

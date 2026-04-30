@@ -756,8 +756,16 @@ export class EndpointSnippetGenerator {
         }
 
         // For now, the Java SDK always includes file properties as positional parameters.
+        // When a file value is missing (nop), we must still emit a positional argument
+        // so that subsequent arguments (e.g. the request wrapper) stay in the correct position.
+        // We use `null` as a placeholder because it is assignable to both `File` (required)
+        // and `Optional<File>` (optional) parameter types.
         if (!inlineFileProperties) {
-            args.push(...filePropertyInfo.fileFields.map((field) => field.value));
+            args.push(
+                ...filePropertyInfo.fileFields.map((field) =>
+                    java.TypeLiteral.isNop(field.value) ? java.TypeLiteral.raw("null") : field.value
+                )
+            );
         }
 
         // For now, the Java SDK always requires the inlined request parameter.
